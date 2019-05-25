@@ -74,11 +74,29 @@
 }
 
 .GridCell {
-    background: #f1f1f1;
     border-top: 1px solid #d8d8d8;
     border-left: 1px solid #d8d8d8;
     display: inline-block;
     box-sizing: border-box;
+    background: '#ffffff';
+    cursor: pointer;
+
+    &.filled {
+        background: rgb(241, 241, 241);
+    }
+
+    &.path {
+        background: rgb(245, 166, 35);
+    }
+
+    &.start {
+        background: rgb(126, 211, 33);
+    }
+
+    &.end {
+        background: rgb(99, 149, 48);
+    }
+
 }
 
 .GridCell:last-child {

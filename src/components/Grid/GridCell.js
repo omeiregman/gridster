@@ -1,10 +1,30 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 
 
-const GridCell = ({ size }) => {
+
+const GridCell = ({ size, filled, inPath, start, end, onClick }) => {
+
+    let colorState = filled ? ' filled' : '';
+
+    if (inPath) {
+        colorState = ' inPath';
+    }
+
+    if (start) {
+        colorState = ' start';
+    }
+
+    if (end) {
+        colorState = ' end';
+    }
+
+
     return (
-        <div className="GridCell" style={{ width: `${size}px`, height: `${size}px` }}></div>
+        <div
+            className={`GridCell${colorState}`} style={{ width: `${size}px`, height: `${size}px` }}
+            onClick={onClick}
+        >
+        </div >
     )
 }
 

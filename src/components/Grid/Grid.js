@@ -10,12 +10,11 @@ class Grid extends Component {
         columns: this.props.columns,
         startIndex: null,
         endIndex: null,
-        cellMatrix: []
+        cellMatrix: this.generateCellMatrix(this.props.rows, this.props.columns)
     }
 
     setupGrid() {
         const { rows, columns } = this.state;
-
         const startIndex = this.generateRandom(0, rows - 1);
         const endIndex = this.generateRandom(0, rows - 1);
         this.setState({ startIndex, endIndex }, this.paintGrid(rows, columns));
@@ -38,10 +37,19 @@ class Grid extends Component {
         return res;
     }
 
+    onClickCell(row, column) {
+        console.log(99999)
+        let { cellMatrix } = this.state;
+        cellMatrix[row][column] = Math.abs(cellMatrix[row][column] - 1);
+        this.setState({ cellMatrix });
+    }
+
     generateRandom(start, end) {
         let rand = Math.random();
         return Math.round((end - start) * rand) + start;
     }
+
+
 
     componentDidMount() {
         this.setupGrid();
@@ -59,23 +67,37 @@ class Grid extends Component {
 
 
     render() {
-        const { columns } = this.state;
-        const { cellMatrix } = this.state;
+        const { rows, columns, cellMatrix, startIndex, endIndex } = this.state;
 
-        console.log(this.state);
         const cellSize = 500 / columns;
+
+        let gridCells = new Array(rows);
+
+        for (let i = 0; i < rows; i++) {
+            let gridCellsRow = new Array(columns);
+
+            for (let j = 0; j < columns; j++) {
+                gridCellsRow[j] = (
+                    <GridCell
+                        onClick={() => { this.onClickCell(i, j) }}
+                        size={cellSize}
+                        filled={cellMatrix[i][j] === 1 ? true : false}
+                        inPath={null}
+                        start={j == 0 && i == startIndex ? true : false}
+                        end={j == columns - 1 && i == endIndex ? true : false}
+                    />
+                );
+            }
+
+            gridCells[i] = (
+                <div>{gridCellsRow}</div>
+            );
+        }
+
 
         return (
             <section className="Grid">
-                {cellMatrix.map(row => {
-                    return (
-                        <div className="row">
-                            {row.map(itemRow => {
-                                return <GridCell size={cellSize} />
-                            })}
-                        </div>
-                    )
-                })}
+                {gridCells}
             </section>
         )
     }
