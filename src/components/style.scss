@@ -1,0 +1,86 @@
+.Control {
+    padding: 5px;
+    margin-top: 10px;
+    background: #f2f2f2;
+    height: 100px;
+    border-radius: 5px;
+
+    .row {
+        float: left;
+        width: 50px;
+        margin-right: 20px;
+    }
+
+    .column {
+        float: left;
+        width: 50px;
+        margin-right: 20px;
+    }
+
+    .x {
+        float: left;
+        margin-top: 35px;
+        margin-right: 20px;
+        color: #666666;
+        font-size: 0.85em;
+    }
+
+    .generate__btn {
+        float: left;
+        width: 50px;
+    }
+
+    .control__wrapper {
+        margin: 20px 0 0 20px
+    }
+
+    .label {
+        margin-bottom: 5px;
+        font-size: 0.85em;
+        color: #666666;
+    }
+
+    .btn__generate {
+        text-align: center;
+        float: left;
+        width: 80px;
+        border: none;
+        font-size: 0.8em;
+        padding-top: 10px;
+        cursor: pointer;
+        height: 33px;
+        box-sizing: border-box;
+        border-radius: 4px;
+        background-color: #4a90e2;
+        color: white;
+        margin-top: 25px;
+    }
+
+}
+
+
+
+.Grid {
+    margin-top: 20px;
+    height: 500px;
+    border-radius: 5px;
+    font-size: 0px;
+
+    .row:last-child {
+        .GridCell {
+            border-bottom: 1px solid #d8d8d8;
+        }
+    }
+}
+
+.GridCell {
+    background: #f1f1f1;
+    border-top: 1px solid #d8d8d8;
+    border-left: 1px solid #d8d8d8;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.GridCell:last-child {
+    border-right: 1px solid #d8d8d8;
+}
