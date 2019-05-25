@@ -21,13 +21,13 @@ class Controls extends Component {
 
     onChange(e) {
         this.setState({
-            [e.target.name]: e.target.value
+            [e.target.name]: Number(e.target.value)
         });
     }
 
     onBlur(e) {
         this.setState({
-            [e.target.name]: Number(e.target.value) < 4 ? "3" : e.target.value
+            [e.target.name]: Number(e.target.value) < 4 ? 3 : Number(e.target.value)
         })
     }
 

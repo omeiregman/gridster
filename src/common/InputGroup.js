@@ -5,7 +5,6 @@ import './common-styles.css';
 
 const InputGroup = ({
     name,
-    placeholder,
     value,
     type,
     onChange,
@@ -15,7 +14,6 @@ const InputGroup = ({
         <div>
             <input
                 className="custom__input"
-                placeholder={placeholder}
                 name={name}
                 value={value}
                 onChange={onChange}
@@ -24,10 +22,9 @@ const InputGroup = ({
         </div>
     )
 }
-InputGroup.PropTypes = {
+InputGroup.propTypes = {
     name: PropTypes.string.isRequired,
-    placehoder: PropTypes.string,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
     onChange: PropTypes.func.isRequired,
     onBlur: PropTypes.func.isRequired

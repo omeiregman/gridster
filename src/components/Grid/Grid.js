@@ -17,16 +17,16 @@ class Grid extends Component {
         const { rows, columns } = this.state;
         const startIndex = this.generateRandom(0, rows - 1);
         const endIndex = this.generateRandom(0, rows - 1);
-        this.setState({ startIndex, endIndex }, this.paintGrid(rows, columns));
-    }
-
-    paintGrid(rows, columns) {
         const cellMatrix = this.generateCellMatrix(rows, columns);
-
-        this.setState({
-            cellMatrix: cellMatrix
-        });
+        this.setState({ startIndex, endIndex, cellMatrix });
     }
+
+    // paintGrid(rows, columns) {
+    //     const cellMatrix = this.generateCellMatrix(rows, columns);
+    //     this.setState({
+    //         cellMatrix: cellMatrix
+    //     });
+    // }
 
     generateCellMatrix(rows, columns) {
         let res = new Array(rows);
@@ -34,11 +34,12 @@ class Grid extends Component {
         for (let i = 0; i < rows; i++) {
             res[i] = new Array(columns).fill(1);
         }
+        console.log("Res: ", res);
         return res;
     }
 
     onClickCell(row, column) {
-        console.log(99999)
+        console.log(99999);
         let { cellMatrix } = this.state;
         cellMatrix[row][column] = Math.abs(cellMatrix[row][column] - 1);
         this.setState({ cellMatrix });
@@ -59,7 +60,11 @@ class Grid extends Component {
         let { rows, columns } = this.props;
 
         if (rows !== prevProps.rows || columns !== prevProps.columns) {
-            this.setState({ rows, columns }, () => {
+            this.setState({
+                rows: rows,
+                columns: columns,
+                cellMatrix: this.generateCellMatrix(rows, columns)
+            }, () => {
                 this.setupGrid();
             });
         }
@@ -68,6 +73,7 @@ class Grid extends Component {
 
     render() {
         const { rows, columns, cellMatrix, startIndex, endIndex } = this.state;
+        console.log("State: ", this.state);
 
         const cellSize = 500 / columns;
 
@@ -81,7 +87,7 @@ class Grid extends Component {
                     <GridCell
                         onClick={() => { this.onClickCell(i, j) }}
                         size={cellSize}
-                        filled={cellMatrix[i][j] === 1 ? true : false}
+                        filled={cellMatrix[i][j] == 1 ? true : false}
                         inPath={null}
                         start={j == 0 && i == startIndex ? true : false}
                         end={j == columns - 1 && i == endIndex ? true : false}
