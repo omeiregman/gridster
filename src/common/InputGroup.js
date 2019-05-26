@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './common-styles.css';
+import '../styles/common-styles.scss';
 
 
 const InputGroup = ({

@@ -33,10 +33,10 @@ const shortestPathFinder = (allSpots, start, end, columnLength) => {
 }
 
 const checkValidSpotsToVisit = (currentSpot, columnLength, end) => {
-    let down = ((currentSpot + columnLength) > numberOfSpots) ? -1 : currentSpot + columnLength;
-    let right = ((currentSpot % columnLength) == 0) ? -1 : currentSpot + 1;
-    let up = (currentSpot <= columnLength) ? -1 : currentSpot - columnLength;
-    let left = ((currentSpot % columnLength) == 1) ? -1 : currentSpot - 1;
+    const down = ((currentSpot + columnLength) > numberOfSpots) ? -1 : currentSpot + columnLength;
+    const right = ((currentSpot % columnLength) == 0) ? -1 : currentSpot + 1;
+    const up = (currentSpot <= columnLength) ? -1 : currentSpot - columnLength;
+    const left = ((currentSpot % columnLength) == 1) ? -1 : currentSpot - 1;
 
     pushToQueue(down, currentSpot, end)
     pushToQueue(right, currentSpot, end)

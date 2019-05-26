@@ -23,34 +23,11 @@ module.exports = {
                 exclude: /node_modules/
             },
             {
-                test: /\.css$/,
-                exclude: /node_modules/,
+                test: /\.(scss|css)$/,
                 use: [
-                    {
-                        loader: 'style-loader'
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            importLoaders: 1,
-                            modules: true,
-                            localIdentName: '[name]__[local]__[hash:base64:5]'
-                        }
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            ident: 'postcss',
-                            plugins: () => [
-                                autoprefixer({
-                                    browsers: [
-                                        "> 1%",
-                                        "last 2 versions"
-                                    ]
-                                })
-                            ]
-                        }
-                    }
+                    "style-loader", // creates style nodes from JS strings
+                    "css-loader", // translates CSS into CommonJS
+                    "sass-loader" // compiles Sass to CSS, using Node Sass by default
                 ]
             },
             {

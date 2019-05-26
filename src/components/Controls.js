@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import InputGroup from '../common/InputGroup';
 import { generateGrid } from '../actions';
-import './style.scss';
+import '../styles/style.scss';
 
 
 class Controls extends Component {

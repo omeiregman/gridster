@@ -96,17 +96,26 @@
         background: rgb(226, 226, 226);
     }
 
-
     &.path {
         background: rgb(245, 166, 35);
     }
 
+    &.path:hover {
+        background: rgb(248, 248, 248);
+    }
+
+    &.path:active {
+        background: rgb(226, 226, 226);
+    }
+
     &.start {
         background: rgb(126, 211, 33);
+        cursor: default;
     }
 
     &.end {
         background: rgb(99, 149, 48);
+        cursor: default;
     }
 }
 

@@ -55,10 +55,8 @@ class Grid extends Component {
         }
     }
 
-
     render() {
         const { rows, columns, cellMatrix, startIndex, endIndex, shortestPath } = this.state;
-
         const cellSize = 500 / columns;
 
         let gridCells = new Array(rows);
@@ -72,6 +70,7 @@ class Grid extends Component {
 
                 gridCellsRow.push((
                     <GridCell
+                        key={count}
                         onClick={() => { this.onCellClick(index) }}
                         size={cellSize}
                         filled={cellMatrix[index] == 1 ? true : false}
@@ -84,11 +83,9 @@ class Grid extends Component {
             }
 
             gridCells[i] = (
-                <div>{gridCellsRow}</div>
+                <div key={i}>{gridCellsRow}</div>
             );
         }
-
-
 
         return (
             <section className="Grid">
@@ -96,7 +93,6 @@ class Grid extends Component {
             </section>
         )
     }
-
 }
 
 
