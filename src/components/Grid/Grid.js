@@ -26,7 +26,7 @@ class Grid extends Component {
         const { cellMatrix, startIndex, endIndex, columns } = this.state;
         cellMatrix[index] = Math.abs(cellMatrix[index] - 1);
         this.setState({ cellMatrix }, () => {
-            let shortestPath = shortestPathFinder(cellMatrix, startIndex + 1, endIndex + 1, columns);
+            const shortestPath = shortestPathFinder(cellMatrix, startIndex + 1, endIndex + 1, columns);
             this.setState({ shortestPath });
         });
     }

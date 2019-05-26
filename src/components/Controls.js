@@ -4,7 +4,7 @@ import InputGroup from '../common/InputGroup';
 import { generateGrid } from '../actions';
 import '../styles/style.scss';
 
-
+//This components controls the input fields and generate button. Sends props to redux state which in turn updates the respective connected component(s)
 class Controls extends Component {
     constructor(props) {
         super(props);
@@ -26,6 +26,7 @@ class Controls extends Component {
     }
 
     onBlur(e) {
+        //ensure that a number less than 3 is not passed and a number greater than 20
         this.setState({
             [e.target.name]: Number(e.target.value) < 3 ? 3 : Number(e.target.value) > 20 ? 20 : Number(e.target.value)
         })
@@ -36,7 +37,6 @@ class Controls extends Component {
             rows: this.state.row,
             columns: this.state.column
         }
-
         this.props.generateGrid(payload);
     }
 
