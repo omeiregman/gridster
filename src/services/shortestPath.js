@@ -1,63 +1,87 @@
 
-export const shortestPath = (allSpots, start, end, columnIndex) => {
-    let nextSpotQueue = []
-    let previousSpotMap = new Map();
-    let reachedEnd = false;
-    let shortestPath = new Set()
-    let unvisitedSpots = new Set()
+export const shortestPath = (cellMatrix, startIndex, endIndex, columns) => {
 
-    shortestPathFinder = (allSpots, start, end, columnLength) => {
-        let numberOfSpots = allSpots.length;
+    let queue = [startIndex];
+    let currentIndex = 0;
 
-        for (let i = 1; i <= numberOfSpots; i++) {
-            if (allSpots[i - 1] == 0) {
-                unvisitedSpots.add(i);
+    let visited = { startIndex: true };
+
+    let relMap = {};
+
+    while (true) {
+        let neighbours = getNeighbours(cellMatrix, queue[currentIndex], columns);
+
+        for (let i = 0; i < neighbours.length; i++) {
+
+            let neighbourIndex = neighbours[i];
+
+            //end found
+            if (neighbourIndex == endIndex) {
+                relMap[endIndex] = queue[currentIndex];
+                queue = [];
+                break;
             }
+
+            //blocked path
+            if (cellMatrix[neighbourIndex] == 1) {
+                continue;
+            }
+
+            //check if visited
+            if (visited[neighbourIndex]) continue;
+
+            visited[neighbourIndex] = true;
+
+            relMap[neighbourIndex] = queue[currentIndex];
+
+
+            queue.push(neighbourIndex);
         }
 
-        nextSpotQueue.push(start);
-
-        //Move Down then Right then Up then Left
-        while (nextSpotQueue.size != 0 || reachedEnd == true) {
-            checkValidSpotsToVisit(nextSpotQueue.shift())
+        if (queue.length == 0) {
+            break;
         }
 
-        if (reachedEnd) {
-            getPath(end);
-        }
+        currentIndex++;
 
-        console.log([...shortestPath]);
-        return shortestPath;
-    }
-
-    function checkValidSpotsToVisit(currentSpot, columnLength) {
-        let down = currentSpot + columnLength;
-        let right = currentSpot + 1;
-        let up = currentSpot - columnLength;
-        let left = currentSpot - 1;
-
-        pushToQueue(down)
-        pushToQueue(right)
-        pushToQueue(up)
-        pushToQueue(left)
-    }
-
-    function pushToQueue(spot, previousSpot, end) {
-        if (spot == end) {
-            previousSpotMap.set(end, previousSpot)
-            reachedEnd = true;
-        } else if (unvisitedSpots.has(spot)) {
-            nextSpotQueue.push(spot);
-            unvisitedSpots.delete(spot);
+        if (currentIndex > queue.length - 1) {
+            return {};
         }
     }
 
-    function getPath() {
-        let position = end;
-        while (position != start) {
-            position = previousSpot.get(position);
-            shortestPath.add(position);
-        }
+    let pathMap = { [endIndex]: relMap[endIndex] };
+    let lastEntry = pathMap[endIndex];
+
+    while (true) {
+        pathMap[lastEntry] = relMap[lastEntry];
+        lastEntry = pathMap[lastEntry];
+
+        if (lastEntry == startIndex) break;
     }
 
+    return pathMap;
+}
+
+
+
+const getNeighbours = (cellMatrix, index, columns) => {
+    let res = [];
+
+    let horzCor = [0, 1, 0, -1];
+    let vertCor = [-1, 0, 1, 0];
+
+    let x = index % columns;
+    let y = Math.floor(index / columns);
+    for (let i = 0; i < 4; i++) {
+
+        const neighbourX = x + horzCor[i];
+        const neighbourY = y + vertCor[i];
+
+        if (neighbourX < 0 || neighbourY < 0) continue;
+        if (neighbourX > columns - 1 || neighbourY > columns - 1) continue;
+
+        res.push(neighbourY * columns + neighbourX);
+    }
+
+    return res;
 }

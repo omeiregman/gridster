@@ -7,6 +7,7 @@ const GridCell = ({ size, filled, inPath, start, end, onClick }) => {
     let colorState = filled ? ' filled' : '';
 
     if (inPath) {
+
         colorState = ' path';
     }
 

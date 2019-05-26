@@ -24,18 +24,12 @@ class Grid extends Component {
     }
 
     onClickCell(index) {
-
         const { cellMatrix, startIndex, endIndex, columns } = this.state;
         cellMatrix[index] = Math.abs(cellMatrix[index] - 1);
         this.setState({ cellMatrix }, () => {
-            // shortestPath([1, 1, 1, 1, 1, 0, 1, 0, 0], 2, 6, 3);
             let pathMatrix = shortestPath(cellMatrix, startIndex, endIndex, columns);
             this.setState({ pathMatrix });
         });
-        // let startIndexArray = cellMatrix[0, startIndex];
-        // let endIndexArray = [this.state.rows - 1, endIndex];
-        // console.log("start: ", startIndex);
-        // console.log("end: ", endIndexArray);
     }
 
     generateRandom(start, end) {
@@ -56,7 +50,8 @@ class Grid extends Component {
             this.setState({
                 rows: rows,
                 columns: columns,
-                cellMatrix: new Array(rows * columns).fill(1)
+                cellMatrix: new Array(rows * columns).fill(1),
+                pathMatrix: {}
             }, () => {
                 this.setupGrid();
             });
@@ -84,9 +79,9 @@ class Grid extends Component {
                     <GridCell
                         onClick={() => { this.onClickCell(index) }}
                         size={cellSize}
-                        filled={cellMatrix[index] == 1 ? true : false}
-                        inPath={pathMatrix[index] ? true : false}
+                        inPath={pathMatrix[index] != undefined ? true : false}
                         start={index == startIndex ? true : false}
+                        filled={cellMatrix[index] == 1 ? true : false}
                         end={index == endIndex ? true : false}
                     />
                 );
