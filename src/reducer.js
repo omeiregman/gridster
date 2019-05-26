@@ -1,8 +1,8 @@
 import * as types from './types';
 
 const initialState = {
-    rows: 3,
-    columns: 3,
+    rows: 10,
+    columns: 10,
     path: []
 }
 

@@ -46,14 +46,22 @@
         width: 80px;
         border: none;
         font-size: 0.8em;
-        padding-top: 10px;
+        padding-top: 8px;
         cursor: pointer;
         height: 33px;
         box-sizing: border-box;
         border-radius: 4px;
-        background-color: #4a90e2;
+        background-color: rgb(74, 144, 226);
         color: white;
         margin-top: 25px;
+    }
+
+    .btn__generate:hover {
+        background-color: rgb(118, 181, 225);
+    }
+
+    .btn__generate:active {
+        background-color: rgb(35, 88, 150);
     }
 
 }
@@ -63,14 +71,9 @@
 .Grid {
     margin-top: 20px;
     height: 500px;
-    border-radius: 5px;
+    border-radius: 3px;
     font-size: 0px;
-
-    .row:last-child {
-        .GridCell {
-            border-bottom: 1px solid #d8d8d8;
-        }
-    }
+    border-bottom: 1px solid #d8d8d8;
 }
 
 .GridCell {
@@ -78,12 +81,21 @@
     border-left: 1px solid #d8d8d8;
     display: inline-block;
     box-sizing: border-box;
-    background: #ffffff;
+    background: rgb(255, 255, 255);
     cursor: pointer;
 
     &.filled {
         background: rgb(241, 241, 241);
     }
+
+    &.filled:hover {
+        background: rgb(248, 248, 248);
+    }
+
+    &.filled:active {
+        background: rgb(226, 226, 226);
+    }
+
 
     &.path {
         background: rgb(245, 166, 35);
@@ -96,7 +108,6 @@
     &.end {
         background: rgb(99, 149, 48);
     }
-
 }
 
 .GridCell:last-child {
