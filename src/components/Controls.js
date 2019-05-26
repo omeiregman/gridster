@@ -27,7 +27,7 @@ class Controls extends Component {
 
     onBlur(e) {
         this.setState({
-            [e.target.name]: Number(e.target.value) < 4 ? 3 : Number(e.target.value)
+            [e.target.name]: Number(e.target.value) < 3 ? 3 : Number(e.target.value) > 20 ? 20 : Number(e.target.value)
         })
     }
 

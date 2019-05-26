@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import GridCell from './GridCell';
+import { shortestPath } from '../../services/shortestPath.js';
 
 
 class Grid extends Component {
@@ -10,43 +11,35 @@ class Grid extends Component {
         columns: this.props.columns,
         startIndex: null,
         endIndex: null,
-        cellMatrix: this.generateCellMatrix(this.props.rows, this.props.columns)
+        cellMatrix: new Array(this.props.rows * this.props.columns).fill(1),
+        pathMatrix: {}
     }
 
     setupGrid() {
+        console.log('rib')
         const { rows, columns } = this.state;
-        const startIndex = this.generateRandom(0, rows - 1);
-        const endIndex = this.generateRandom(0, rows - 1);
-        const cellMatrix = this.generateCellMatrix(rows, columns);
-        this.setState({ startIndex, endIndex, cellMatrix });
+        const startIndex = this.generateRandom(0, rows - 1) * columns;
+        const endIndex = this.generateRandom(0, rows - 1) * columns + columns - 1;
+        this.setState({ startIndex, endIndex });
     }
 
-    // paintGrid(rows, columns) {
-    //     const cellMatrix = this.generateCellMatrix(rows, columns);
-    //     this.setState({
-    //         cellMatrix: cellMatrix
-    //     });
-    // }
+    onClickCell(index) {
 
-    generateCellMatrix(rows, columns) {
-        let res = new Array(rows);
-
-        for (let i = 0; i < rows; i++) {
-            res[i] = new Array(columns).fill(1);
-        }
-        console.log("Res: ", res);
-        return res;
-    }
-
-    onClickCell(row, column) {
-        console.log(99999);
-        let { cellMatrix } = this.state;
-        cellMatrix[row][column] = Math.abs(cellMatrix[row][column] - 1);
-        this.setState({ cellMatrix });
+        const { cellMatrix, startIndex, endIndex, columns } = this.state;
+        cellMatrix[index] = Math.abs(cellMatrix[index] - 1);
+        this.setState({ cellMatrix }, () => {
+            // shortestPath([1, 1, 1, 1, 1, 0, 1, 0, 0], 2, 6, 3);
+            let pathMatrix = shortestPath(cellMatrix, startIndex, endIndex, columns);
+            this.setState({ pathMatrix });
+        });
+        // let startIndexArray = cellMatrix[0, startIndex];
+        // let endIndexArray = [this.state.rows - 1, endIndex];
+        // console.log("start: ", startIndex);
+        // console.log("end: ", endIndexArray);
     }
 
     generateRandom(start, end) {
-        let rand = Math.random();
+        const rand = Math.random();
         return Math.round((end - start) * rand) + start;
     }
 
@@ -57,13 +50,13 @@ class Grid extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        let { rows, columns } = this.props;
+        const { rows, columns } = this.props;
 
         if (rows !== prevProps.rows || columns !== prevProps.columns) {
             this.setState({
                 rows: rows,
                 columns: columns,
-                cellMatrix: this.generateCellMatrix(rows, columns)
+                cellMatrix: new Array(rows * columns).fill(1)
             }, () => {
                 this.setupGrid();
             });
@@ -72,25 +65,29 @@ class Grid extends Component {
 
 
     render() {
-        const { rows, columns, cellMatrix, startIndex, endIndex } = this.state;
+        const { rows, columns, cellMatrix, startIndex, endIndex, pathMatrix } = this.state;
         console.log("State: ", this.state);
 
         const cellSize = 500 / columns;
 
         let gridCells = new Array(rows);
+        let count = 0;
 
         for (let i = 0; i < rows; i++) {
             let gridCellsRow = new Array(columns);
 
             for (let j = 0; j < columns; j++) {
+
+                let index = i * columns + j;
+
                 gridCellsRow[j] = (
                     <GridCell
-                        onClick={() => { this.onClickCell(i, j) }}
+                        onClick={() => { this.onClickCell(index) }}
                         size={cellSize}
-                        filled={cellMatrix[i][j] == 1 ? true : false}
-                        inPath={null}
-                        start={j == 0 && i == startIndex ? true : false}
-                        end={j == columns - 1 && i == endIndex ? true : false}
+                        filled={cellMatrix[index] == 1 ? true : false}
+                        inPath={pathMatrix[index] ? true : false}
+                        start={index == startIndex ? true : false}
+                        end={index == endIndex ? true : false}
                     />
                 );
             }
@@ -99,6 +96,7 @@ class Grid extends Component {
                 <div>{gridCellsRow}</div>
             );
         }
+
 
 
         return (
@@ -114,7 +112,7 @@ class Grid extends Component {
 const mapStateToProps = (state) => {
     return {
         rows: state.rows,
-        columns: state.columns,
+        columns: state.columns
     }
 }
 

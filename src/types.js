@@ -1,1 +1,2 @@
 export const GENERATE_GRID = 'GENERATE_GRID';
+export const GENERATE_PATH = 'GENERATE_PATH';

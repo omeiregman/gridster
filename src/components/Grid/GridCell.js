@@ -7,7 +7,7 @@ const GridCell = ({ size, filled, inPath, start, end, onClick }) => {
     let colorState = filled ? ' filled' : '';
 
     if (inPath) {
-        colorState = ' inPath';
+        colorState = ' path';
     }
 
     if (start) {
@@ -24,7 +24,7 @@ const GridCell = ({ size, filled, inPath, start, end, onClick }) => {
             className={`GridCell${colorState}`} style={{ width: `${size}px`, height: `${size}px` }}
             onClick={onClick}
         >
-        </div >
+        </div>
     )
 }
 
